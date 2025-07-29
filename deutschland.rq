@@ -1,0 +1,34 @@
+#defaultView:Map{"hide":["?id", "?safeName", "?geoshape"]}
+#title: Karte aller Verwaltungseinheiten in Deutschland
+SELECT ?id ?name ?safeName ?description ?geoshape
+WHERE {
+  VALUES (?id ?name ?safeName ?description) {
+  # basierend auf https://de.wikipedia.org/wiki/Landkreis#Liste_von_Land-_und_Stadtkreisen (08/2025)
+    (wd:Q183 'Deutschland' 'deutschland' '')       
+		(wd:Q985 'Baden-Württemberg' 'deutschland/baden-wuerttemberg' '')
+		(wd:Q980 'Bayern' 'deutschland/bayern' '')
+		(wd:Q64 'Berlin' 'deutschland/berlin' '')
+		(wd:Q1208 'Brandenburg' 'deutschland/brandenburg' '')
+		(wd:Q1209 'Bremen' 'deutschland/bremen' '')
+		(wd:Q1055 'Hamburg' 'deutschland/hamburg' '')
+		(wd:Q1199 'Hessen' 'deutschland/hessen' '')
+		(wd:Q1196 'Mecklenburg-Vorpommern' 'deutschland/mecklenburg-vorpommern' '')
+		(wd:Q1197 'Niedersachsen' 'deutschland/niedersachsen' '')	
+		(wd:Q1198 'Nordrhein-Westfalen' 'deutschland/nordrhein-westfalen' '')
+		(wd:Q1200 'Rheinland-Pfalz' 'deutschland/rheinland-pfalz' '')
+		(wd:Q1201 'Saarland' 'deutschland/saarland' '')
+		(wd:Q1202 'Sachsen' 'deutschland/sachsen' '')
+		(wd:Q1206 'Sachsen-Anhalt' 'deutschland/sachsen-anhalt' '')
+		(wd:Q1194 'Schleswig-Holstein' 'deutschland/schleswig-holstein' '')
+		(wd:Q1205 'Thüringen' 'deutschland/thueringen' '')
+		}
+  OPTIONAL {
+    ?id wdt:P3896 ?geoshape . 
+  }
+  SERVICE wikibase:label {
+	bd:serviceParam wikibase:language "de,en,mul" .
+	?name rdfs:label ?nameDescription .
+  }
+}
+GROUP BY ?id ?name ?safeName ?description ?geoshape
+ORDER BY ?safeName
